@@ -1,0 +1,821 @@
+<html><head><base href="https://mediax.app/"><title>MediaX - Your Social Universe</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+  }
+  .app-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  header {
+    background-color: #1e1e1e;
+    color: #00aaff;
+    padding: 10px 0;
+    text-align: center;
+  }
+  .logo {
+    font-size: 28px;
+    font-weight: bold;
+  }
+  nav {
+    display: flex;
+    justify-content: space-around;
+    background-color: #1e1e1e;
+    padding: 10px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  nav a {
+    color: #00aaff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  nav a:hover {
+    background-color: #2c2c2c;
+  }
+  .content {
+    display: flex;
+    margin-top: 20px;
+  }
+  .main-content {
+    flex: 3;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  .sidebar {
+    flex: 1;
+    margin-left: 20px;
+  }
+  .post {
+    border-bottom: 1px solid #2c2c2c;
+    padding: 15px 0;
+  }
+  .post-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  .username {
+    font-weight: bold;
+    color: #00aaff;
+  }
+  .post-content {
+    margin-bottom: 10px;
+  }
+  .post-media {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  .post-actions {
+    display: flex;
+    justify-content: space-between;
+  }
+  .action-button {
+    background: none;
+    border: none;
+    color: #00aaff;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    transition: background-color 0.3s;
+  }
+  .action-button:hover {
+    background-color: #2c2c2c;
+  }
+  .trending {
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  .trending h2 {
+    margin-top: 0;
+    color: #00aaff;
+  }
+  .trending-item {
+    margin-bottom: 10px;
+    color: #b0b0b0;
+  }
+  #compose-post {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #2c2c2c;
+    border: none;
+    border-radius: 5px;
+    color: #e0e0e0;
+  }
+  #post-button {
+    background-color: #00aaff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  #post-button:hover {
+    background-color: #0088cc;
+  }
+  #media-upload {
+    display: none;
+  }
+  #upload-label {
+    display: inline-block;
+    background-color: #2c2c2c;
+    color: #00aaff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  #upload-label:hover {
+    background-color: #3c3c3c;
+  }
+  .emoji-reactions {
+    display: flex;
+    gap: 5px;
+    margin-top: 5px;
+  }
+  .emoji-reaction {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 2px 5px;
+    border-radius: 3px;
+    transition: background-color 0.3s;
+  }
+  .emoji-reaction:hover {
+    background-color: #2c2c2c;
+  }
+  .emoji-count {
+    font-size: 12px;
+    color: #b0b0b0;
+    margin-left: 2px;
+  }
+  #message-list {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+  }
+  #message-compose {
+    display: flex;
+    margin-top: 20px;
+  }
+  #new-message {
+    flex-grow: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #2c2c2c;
+    color: #e0e0e0;
+    margin-right: 10px;
+  }
+  #send-message {
+    background-color: #00aaff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  #send-message:hover {
+    background-color: #0088cc;
+  }
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  .video-item {
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  .video-item video {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  #theme-toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #00aaff;
+  }
+
+  /* Light mode styles */
+  body.light-mode {
+    background-color: #f0f0f0;
+    color: #333;
+  }
+
+  body.light-mode header,
+  body.light-mode nav,
+  body.light-mode .main-content,
+  body.light-mode .trending,
+  body.light-mode .video-item {
+    background-color: #ffffff;
+  }
+
+  body.light-mode nav a,
+  body.light-mode .username,
+  body.light-mode .action-button,
+  body.light-mode #upload-label {
+    color: #333;
+  }
+
+  .chat-container {
+    width: 100%;
+  }
+
+  .content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hashtag-container {
+    /* ... existing styles ... */
+  }
+
+  .chat-container {
+    /* Remove any left margin or padding */
+    margin-left: 0;
+    padding-left: 0;
+    /* ... other existing styles ... */
+  }
+
+  /* ... other existing styles ... */
+
+  .message {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+  }
+
+  .message strong {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .message small {
+    display: block;
+    color: #777;
+    font-size: 0.8em;
+    margin-top: 5px;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="content">
+      <div class="hashtag-container">
+        <header>
+          <div class="logo">MediaX</div>
+          <button id="theme-toggle">🌙</button>
+        </header>
+        <nav>
+          <a href="/home" id="home-tab">Home</a>
+          <a href="/videos" id="videos-tab">Videos</a>
+          <a href="/messages" id="messages-tab">Messages</a>
+          <a href="/notifications" id="notifications-tab">Notifications</a>
+          <a href="/profile" id="profile-tab">Profile</a>
+        </nav>
+      </div>
+      <div class="chat-container">
+        <div class="main-content" id="main-content">
+          <!-- Content will be dynamically loaded here -->
+        </div>
+        <div class="sidebar">
+          <div class="trending">
+            <h2>Trending Topics</h2>
+            <div class="trending-item">#MediaXLaunch</div>
+            <div class="trending-item">#TechInnovation</div>
+            <div class="trending-item">#DigitalArtRevolution</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const mainContent = document.getElementById('main-content');
+    const tabs = document.querySelectorAll('nav a');
+
+    function createPostHTML(postContent, mediaHTML, avatar, username) {
+      return `
+        <div class="post-header">
+          <img src="${avatar}" alt="${username}'s avatar" class="avatar">
+          <span class="username">${username}</span>
+        </div>
+        <div class="post-content">
+          ${postContent}
+        </div>
+        ${mediaHTML}
+        <div class="post-actions">
+          <div class="emoji-reactions">
+            <button class="emoji-reaction" data-emoji="👍">👍 <span class="emoji-count">0</span></button>
+            <button class="emoji-reaction" data-emoji="❤️">❤️ <span class="emoji-count">0</span></button>
+            <button class="emoji-reaction" data-emoji="😂">😂 <span class="emoji-count">0</span></button>
+            <button class="emoji-reaction" data-emoji="😮">😮 <span class="emoji-count">0</span></button>
+            <button class="emoji-reaction" data-emoji="😢">😢 <span class="emoji-count">0</span></button>
+          </div>
+          <button class="action-button">Comment</button>
+          <button class="action-button">Share</button>
+        </div>
+      `;
+    }
+
+    function loadHomeContent() {
+      mainContent.innerHTML = `
+        <textarea id="compose-post" placeholder="What's on your mind?"></textarea>
+        <label for="media-upload" id="upload-label">📎 Attach Media</label>
+        <input type="file" id="media-upload" accept="image/*, video/*">
+        <button id="post-button">Post</button>
+        <div id="posts-container">
+          ${createPostHTML(
+            "Just launched my new digital art collection! Check it out on MediaX NFT marketplace! 🎨🚀 #DigitalArt #NFT",
+            '<img src="https://mediax.app/images/digital-art-collection.jpg" alt="Digital art collection preview" class="post-media">',
+            "https://mediax.app/avatars/user1.jpg",
+            "John Doe"
+          )}
+          ${createPostHTML(
+            "Captured this amazing sunset during my travels. The world is full of beauty! 🌅 #TravelPhotography",
+            '<img src="https://mediax.app/images/sunset-travel.jpg" alt="Beautiful sunset over mountains" class="post-media">',
+            "https://mediax.app/avatars/user2.jpg",
+            "Jane Smith"
+          )}
+          ${createPostHTML(
+            "Just finished my latest tech project! AI-powered smart home assistant. Who wants to beta test? 🤖🏠 #TechInnovation",
+            '<video src="https://mediax.app/videos/ai-assistant-demo.mp4" controls class="post-media"></video>',
+            "https://mediax.app/avatars/user3.jpg",
+            "Alex Johnson"
+          )}
+          ${createPostHTML(
+            "New recipe alert! 🍳 Vegan pancakes that taste just like the real thing. Check out my blog for the full recipe! #VeganCooking",
+            '<img src="https://mediax.app/images/vegan-pancakes.jpg" alt="Stack of vegan pancakes" class="post-media">',
+            "https://mediax.app/avatars/user4.jpg",
+            "Emma Watson"
+          )}
+          ${createPostHTML(
+            "Just hit 1 million followers! 🎉 Thank you all for your support. Special live stream coming soon to celebrate! #Milestone",
+            '',
+            "https://mediax.app/avatars/user5.jpg",
+            "Michael Brown"
+          )}
+          ${createPostHTML(
+            "Cherry blossoms in full bloom! 🌸 Spring is truly magical. #NaturePhotography",
+            '<img src="https://mediax.app/images/cherry-blossoms.jpg" alt="Cherry blossoms in a park" class="post-media">',
+            "https://mediax.app/avatars/user6.jpg",
+            "Sakura Tanaka"
+          )}
+          ${createPostHTML(
+            "Just watched the latest episode of 'Attack on Titan'. Mind = Blown! 🤯 #AnimeAddict",
+            '<video src="https://mediax.app/videos/aot-clip.mp4" controls class="post-media"></video>',
+            "https://mediax.app/avatars/user7.jpg",
+            "Eren Yeager"
+          )}
+          ${createPostHTML(
+            "Visited the ancient ruins of Machu Picchu. The history here is breathtaking! ⛰️ #TravelDiary",
+            '<img src="https://mediax.app/images/machu-picchu.jpg" alt="Machu Picchu ruins" class="post-media">',
+            "https://mediax.app/avatars/user8.jpg",
+            "Indiana Jones"
+          )}
+          ${createPostHTML(
+            "New 'My Hero Academia' trailer just dropped! Who else is hyped for the new season? 💥 #MyHeroAcademia #PlusUltra",
+            '<video src="https://mediax.app/videos/mha-trailer.mp4" controls class="post-media"></video>',
+            "https://mediax.app/avatars/user9.jpg",
+            "Deku Fan"
+          )}
+          ${createPostHTML(
+            "Caught this incredible moment during the wildlife photography tour. Nature never ceases to amaze! 🦁 #WildlifePhotography",
+            '<img src="https://mediax.app/images/lion-cub.jpg" alt="Lion cub playing" class="post-media">',
+            "https://mediax.app/avatars/user10.jpg",
+            "Nat Geo Explorer"
+          )}
+        </div>
+      `;
+    }
+
+    function loadVideosContent() {
+      mainContent.innerHTML = `
+        <h2>Trending Videos</h2>
+        <div class="video-grid">
+          <div class="video-item">
+            <video src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" poster="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg" controls></video>
+            <h3>Big Buck Bunny</h3>
+            <p>By Blender Foundation</p>
+          </div>
+          <div class="video-item">
+            <video src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" poster="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ElephantsDream.jpg" controls></video>
+            <h3>Elephant's Dream</h3>
+            <p>By Trixy Galve</p>
+          </div>
+          <div class="video-item">
+            <video src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" poster="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerBlazes.jpg" controls></video>
+            <h3>For Bigger Blazes</h3>
+            <p>By Google</p>
+          </div>
+        </div>
+      `;
+    }
+
+    function loadMessagesContent() {
+      mainContent.innerHTML = `
+        <h2>Messages</h2>
+        <div id="message-list">
+          <div class="message" data-username="Trixy Galve">
+            <div class="message-header">
+              <img src="https://mediax.app/avatars/user2.jpg" alt="User avatar" class="avatar">
+              <span class="username">Trixy Galve</span>
+            </div>
+            <div class="message-content">
+              sir ok na ni akong project?
+            </div>
+          </div>
+          <div class="message" data-username="Bakugou Katsuki">
+            <div class="message-header">
+              <img src="https://mediax.app/avatars/user3.jpg" alt="User avatar" class="avatar">
+              <span class="username">Bakugou Katsuki</span>
+            </div>
+            <div class="message-content">
+              Ohio
+            </div>
+          </div>
+          <div class="message" data-username="Sarah Heronimo">
+            <div class="message-header">
+              <img src="https://mediax.app/avatars/user7.jpg" alt="User avatar" class="avatar">
+              <span class="username">Sarah Heronimo</span>
+            </div>
+            <div class="message-content">
+              I saw your travel photos. They're amazing! Where was that sunset pic taken?
+            </div>
+          </div>
+          <div class="message" data-username="Eduard Caayaman">
+            <div class="message-header">
+              <img src="https://mediax.app/avatars/user8.jpg" alt="User avatar" class="avatar">
+              <span class="username">Eduard Caayaman</span>
+            </div>
+            <div class="message-content">
+              Hey, I'm organizing a virtual art exhibition next month. Would you like to participate?
+            </div>
+          </div>
+          <div class="message" data-username="Rocill Cadelena">
+            <div class="message-header">
+              <img src="https://mediax.app/avatars/user9.jpg" alt="User avatar" class="avatar">
+              <span class="username">Rocill Cadelena</span>
+            </div>
+            <div class="message-content">
+              Your latest blog post about AI in art was fascinating. Do you have time for a quick interview for my podcast?
+            </div>
+          </div>
+        </div>
+        <div id="message-compose">
+          <textarea id="new-message" placeholder="Type your message here..."></textarea>
+          <button id="send-message">Send</button>
+        </div>
+      `;
+
+      // Add event listener for clicking on messages
+      const messages = document.querySelectorAll('.message');
+      messages.forEach(message => {
+        message.addEventListener('click', function() {
+          const username = this.dataset.username;
+          const messageList = document.getElementById('message-list');
+          messageList.innerHTML = '';
+          messageList.appendChild(this.cloneNode(true));
+          
+          // Automatically send a message
+          const autoMessage = `Hi ${username}, thanks for your message! How can I help you today?`;
+          const newMessage = document.createElement('div');
+          newMessage.classList.add('message');
+          newMessage.innerHTML = `
+            <div class="message-header">
+              <img src="https://mediax.app/avatars/user6.jpg" alt="Your avatar" class="avatar">
+              <span class="username">You</span>
+            </div>
+            <div class="message-content">
+              ${autoMessage}
+            </div>
+          `;
+          messageList.appendChild(newMessage);
+        });
+      });
+
+      // Add event listener for sending messages
+      document.getElementById('send-message').addEventListener('click', function() {
+        const messageContent = document.getElementById('new-message').value;
+        if (messageContent.trim() !== '') {
+          const newMessage = document.createElement('div');
+          newMessage.classList.add('message');
+          newMessage.innerHTML = `
+            <div class="message-header">
+              <img src="https://mediax.app/avatars/user6.jpg" alt="Your avatar" class="avatar">
+              <span class="username">You</span>
+            </div>
+            <div class="message-content">
+              ${messageContent}
+            </div>
+          `;
+          document.getElementById('message-list').appendChild(newMessage);
+          document.getElementById('new-message').value = '';
+        }
+      });
+    }
+
+    function loadNotificationsContent() {
+      mainContent.innerHTML = `
+        <h2>Notifications</h2>
+        <div class="notification">
+          <div class="notification-header">
+            <img src="https://mediax.app/avatars/user4.jpg" alt="User avatar" class="avatar">
+            <span class="username">Emma Watson</span>
+          </div>
+          <div class="notification-content">
+            liked your post
+          </div>
+        </div>
+        <div class="notification">
+          <div class="notification-header">
+            <img src="https://mediax.app/avatars/user5.jpg" alt="User avatar" class="avatar">
+            <span class="username">Michael Brown</span>
+          </div>
+          <div class="notification-content">
+            mentioned you in a comment
+          </div>
+        </div>
+      `;
+    }
+
+    function loadProfileContent() {
+      mainContent.innerHTML = `
+        <h2>Your Profile</h2>
+        <div id="profile-info">
+          <img src="https://mediax.app/avatars/user6.jpg" alt="Your avatar" class="avatar" style="width: 100px; height: 100px;">
+          <h3>Your Name</h3>
+          <p>@yourusername</p>
+          <p>Your bio goes here. Click edit to change it.</p>
+          <button id="edit-profile">Edit Profile</button>
+        </div>
+        <div id="profile-edit" style="display: none;">
+          <input type="text" id="edit-name" placeholder="Your Name">
+          <input type="text" id="edit-username" placeholder="@yourusername">
+          <textarea id="edit-bio" placeholder="Your bio"></textarea>
+          <button id="save-profile">Save Profile</button>
+        </div>
+        <h3>Your Posts</h3>
+        <div id="user-posts">
+          ${createPostHTML(
+            "Just launched my new digital art collection! Check it out on MediaX NFT marketplace! 🎨🚀 #DigitalArt #NFT",
+            '<img src="https://mediax.app/images/digital-art-collection.jpg" alt="Digital art collection preview" class="post-media">',
+            "https://mediax.app/avatars/user6.jpg",
+            "You"
+          )}
+          ${createPostHTML(
+            "Working on a new AI project. Can't wait to share more details soon! 🤖 #AI #TechInnovation",
+            '',
+            "https://mediax.app/avatars/user6.jpg",
+            "You"
+          )}
+        </div>
+      `;
+
+      // Add event listeners for profile editing
+      document.getElementById('edit-profile').addEventListener('click', function() {
+        document.getElementById('profile-info').style.display = 'none';
+        document.getElementById('profile-edit').style.display = 'block';
+      });
+
+      document.getElementById('save-profile').addEventListener('click', function() {
+        const name = document.getElementById('edit-name').value;
+        const username = document.getElementById('edit-username').value;
+        const bio = document.getElementById('edit-bio').value;
+
+        document.querySelector('#profile-info h3').textContent = name;
+        document.querySelector('#profile-info p:nth-child(3)').textContent = username;
+        document.querySelector('#profile-info p:nth-child(4)').textContent = bio;
+
+        document.getElementById('profile-info').style.display = 'block';
+        document.getElementById('profile-edit').style.display = 'none';
+      });
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function(e) {
+        e.preventDefault();
+        const tabId = this.id;
+        
+        switch(tabId) {
+          case 'home-tab':
+            loadHomeContent();
+            break;
+          case 'videos-tab':
+            loadVideosContent();
+            break;
+          case 'messages-tab':
+            loadMessagesContent();
+            break;
+          case 'notifications-tab':
+            loadNotificationsContent();
+            break;
+          case 'profile-tab':
+            loadProfileContent();
+            break;
+        }
+      });
+    });
+
+    // Load home content by default
+    loadHomeContent();
+
+    // Event delegation for dynamically created elements
+    document.addEventListener('click', function(e) {
+      if (e.target && e.target.id === 'post-button') {
+        const postContent = document.getElementById('compose-post').value;
+        const mediaUpload = document.getElementById('media-upload');
+        if (postContent.trim() !== '' || mediaUpload.files.length > 0) {
+          const newPost = document.createElement('div');
+          newPost.classList.add('post');
+          let mediaHTML = '';
+          if (mediaUpload.files.length > 0) {
+            const file = mediaUpload.files[0];
+            if (file.type.startsWith('image/')) {
+              mediaHTML = `<img src="${URL.createObjectURL(file)}" alt="User uploaded image" class="post-media">`;
+            } else if (file.type.startsWith('video/')) {
+              mediaHTML = `<video src="${URL.createObjectURL(file)}" controls class="post-media"></video>`;
+            }
+          }
+          newPost.innerHTML = createPostHTML(
+            postContent,
+            mediaHTML,
+            "https://mediax.app/avatars/user6.jpg",
+            "You"
+          );
+          const postsContainer = document.getElementById('posts-container');
+          postsContainer.insertBefore(newPost, postsContainer.firstChild);
+          document.getElementById('compose-post').value = '';
+          mediaUpload.value = '';
+        }
+      }
+
+      if (e.target && e.target.classList.contains('emoji-reaction')) {
+        const emojiButton = e.target;
+        const countSpan = emojiButton.querySelector('.emoji-count');
+        let count = parseInt(countSpan.textContent);
+        count++;
+        countSpan.textContent = count;
+      }
+    });
+
+    // Light mode toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', function() {
+      document.body.classList.toggle('light-mode');
+      if (document.body.classList.contains('light-mode')) {
+        themeToggle.textContent = '☀️';
+      } else {
+        themeToggle.textContent = '🌙';
+      }
+    });
+
+    function displayNotifications(notifications) {
+      const notificationList = document.getElementById('notificationList');
+      notificationList.innerHTML = '';
+
+      notifications.forEach(notification => {
+        const li = document.createElement('li');
+        li.textContent = notification.message;
+        li.setAttribute('data-post-id', notification.postId); // Add this line
+        li.addEventListener('click', openAssociatedPost); // Add this line
+        notificationList.appendChild(li);
+      });
+    }
+
+    function openAssociatedPost(event) {
+      const postId = event.target.getAttribute('data-post-id');
+      if (postId) {
+        // Close the notification dropdown
+        document.getElementById('notificationDropdown').style.display = 'none';
+
+        // Fetch and display the post
+        fetchPost(postId);
+      }
+    }
+
+    function fetchPost(postId) {
+      // This is a placeholder function. In a real application, you would
+      // fetch the post data from your backend using the postId.
+      console.log(`Fetching post with ID: ${postId}`);
+
+      // Simulating post fetch with setTimeout
+      setTimeout(() => {
+        displayPost({
+          id: postId,
+          content: `This is the content of post ${postId}`,
+          author: 'John Doe',
+          timestamp: new Date().toISOString()
+        });
+      }, 1000);
+    }
+
+    function displayPost(post) {
+      const chatMessages = document.getElementById('chatMessages');
+      
+      // Clear existing messages
+      chatMessages.innerHTML = '';
+
+      // Create and append the post message
+      const postElement = document.createElement('div');
+      postElement.classList.add('message');
+      postElement.innerHTML = `
+        <strong>${post.author}</strong>
+        <p>${post.content}</p>
+        <small>${new Date(post.timestamp).toLocaleString()}</small>
+      `;
+      chatMessages.appendChild(postElement);
+
+      // Scroll to the bottom of the chat
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Function to fetch posts from the server
+    function fetchPosts() {
+      // In a real application, this would be an API call to your backend
+      // For this example, we'll simulate fetching posts with a setTimeout
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          const posts = [
+            { id: 1, author: 'John Doe', content: 'Hello, world!', timestamp: new Date().toISOString() },
+            { id: 2, author: 'Jane Smith', content: 'Having a great day!', timestamp: new Date().toISOString() },
+            { id: 3, author: 'Bob Johnson', content: 'Just finished a new project.', timestamp: new Date().toISOString() },
+            // Add more sample posts as needed
+          ];
+          resolve(posts);
+        }, 500); // Simulating network delay
+      });
+    }
+
+    // Function to display posts in the chat area
+    function displayPosts(posts) {
+      const chatMessages = document.getElementById('chatMessages');
+      chatMessages.innerHTML = ''; // Clear existing messages
+
+      posts.forEach(post => {
+        const postElement = document.createElement('div');
+        postElement.classList.add('message');
+        postElement.innerHTML = `
+          <strong>${post.author}</strong>
+          <p>${post.content}</p>
+          <small>${new Date(post.timestamp).toLocaleString()}</small>
+        `;
+        chatMessages.appendChild(postElement);
+      });
+
+      // Scroll to the bottom of the chat
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Function to initialize the app
+    function initializeApp() {
+      fetchPosts()
+        .then(posts => {
+          displayPosts(posts);
+        })
+        .catch(error => {
+          console.error('Error fetching posts:', error);
+        });
+    }
+
+    // Call initializeApp when the DOM content is loaded
+    document.addEventListener('DOMContentLoaded', initializeApp);
+  </script>
+</body>
+</html>
